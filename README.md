@@ -1,6 +1,6 @@
 # ВЫПУСКНОЙ ПРОЕКТ СТАЖИРОВКИ TOPJAVA
 
-##Деплой в Heroku: [GRADUATION](http://damp-temple-95549.herokuapp.com).
+### Деплой в Heroku: [GRADUATION](http://damp-temple-95549.herokuapp.com).
 
 Приложение с регистрацией/авторизацией и интерфейсом на основе ролей (USER, MANAGER, ADMIN).
 
