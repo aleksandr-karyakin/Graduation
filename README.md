@@ -1,5 +1,7 @@
 # ВЫПУСКНОЙ ПРОЕКТ СТАЖИРОВКИ TOPJAVA
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1af51a297ea24ae4ad39d3ef80fd6183)](https://app.codacy.com/app/alex-kar/Graduation?utm_source=github.com&utm_medium=referral&utm_content=alex-kar/Graduation&utm_campaign=Badge_Grade_Settings)
+
 ### Деплой в Heroku: [GRADUATION](http://damp-temple-95549.herokuapp.com).
 
 Приложение с регистрацией/авторизацией и интерфейсом на основе ролей (USER, MANAGER, ADMIN).
