@@ -1,4 +1,4 @@
-package com.company.project.web.UI;
+package com.company.project.web.ajax;
 
 import com.company.project.web.AbstractUsersController;
 import org.springframework.http.HttpStatus;

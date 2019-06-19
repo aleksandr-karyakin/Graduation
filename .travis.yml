@@ -6,15 +6,8 @@ cache:
     - $HOME/.m2
 
 before_script:
-  - psql -c 'create database topjava' -U postgres
-  - psql -c 'create user "user"; grant all privileges on database topjava to "user"' -U postgres
-
-branches:
-  only:
-    - master
-
-env:
-  - GRADUATION_ROOT=$TRAVIS_BUILD_DIR
+  - psql -c 'create database graduation' -U postgres
+  - psql -c 'create user "user"; grant all privileges on database graduation to "user"' -U postgres
 
 notifications:
   email: false

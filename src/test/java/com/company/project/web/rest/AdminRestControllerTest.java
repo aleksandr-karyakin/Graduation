@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.company.project.TestUtil.readFromJson;
@@ -17,8 +16,7 @@ import static com.company.project.data.UserTestData.*;
 import static com.company.project.util.exception.ErrorType.VALIDATION_ERROR;
 import static com.company.project.util.json.JsonUtil.writeValue;
 import static com.company.project.web.handler.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,7 +75,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         User updated = new User(USER);
         updated.setName("UpdatedName");
 
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+        mockMvc.perform(put(REST_URL + USER_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(updated, updated.getPassword())))
@@ -91,7 +89,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void testUpdateWithIncorrectId() throws Exception {
         User updated = new User(USER);
         updated.setName("UpdatedName");
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + ADMIN_ID)
+        mockMvc.perform(put(REST_URL + ADMIN_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))
@@ -100,7 +98,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID)
+        mockMvc.perform(delete(REST_URL + USER_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -109,7 +107,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGet() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID)
+        mockMvc.perform(get(REST_URL + ADMIN_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -168,7 +166,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void testUpdateInvalid() throws Exception {
         User updated = new User(USER);
         updated.setName("");
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+        mockMvc.perform(put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(writeValue(updated)))
@@ -196,7 +194,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void testUpdateDuplicate() throws Exception {
         User updated = new User(USER);
         updated.setEmail("admin@gmail.com");
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+        mockMvc.perform(put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(jsonWithPassword(updated, "password")))

@@ -1,4 +1,4 @@
-package com.company.project.web.UI;
+package com.company.project.web.ajax;
 
 import com.company.project.AuthorizedUser;
 import com.company.project.model.Restaurant;

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.company.project.model.Dish;
 import com.company.project.service.DishService;
 import com.company.project.web.AbstractControllerTest;
@@ -65,7 +64,7 @@ class DishRestControllerTest extends AbstractControllerTest {
     void testUpdate() throws Exception {
         Dish updated = new Dish(DISH1_ID, "new name", 333, true);
 
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID)
+        mockMvc.perform(put(REST_URL + DISH1_ID)
                 .with(userHttpBasic(MANAGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))
@@ -76,7 +75,7 @@ class DishRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + DISH1_ID)
+        mockMvc.perform(delete(REST_URL + DISH1_ID)
                 .with(userHttpBasic(MANAGER)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -86,7 +85,7 @@ class DishRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGet() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + DISH1_ID)
+        mockMvc.perform(get(REST_URL + DISH1_ID)
                 .with(userHttpBasic(MANAGER)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -126,7 +125,7 @@ class DishRestControllerTest extends AbstractControllerTest {
     @Test
     void testUpdateInvalid() throws Exception {
         Dish updated = new Dish(DISH1_ID, "n", 0, true);
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID)
+        mockMvc.perform(put(REST_URL + DISH1_ID)
                 .with(userHttpBasic(MANAGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import com.company.project.model.Restaurant;
 import com.company.project.service.RestaurantService;
@@ -61,7 +60,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
     void testUpdate() throws Exception {
         Restaurant updated = new Restaurant(REST1_ID, "new Restaurant");
 
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID)
+        mockMvc.perform(put(REST_URL + REST1_ID)
                 .with(TestUtil.userHttpBasic(MANAGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))
@@ -72,7 +71,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + REST1_ID)
+        mockMvc.perform(delete(REST_URL + REST1_ID)
                 .with(TestUtil.userHttpBasic(MANAGER)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -81,7 +80,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGet() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + REST1_ID)
+        mockMvc.perform(get(REST_URL + REST1_ID)
                 .with(TestUtil.userHttpBasic(MANAGER)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -121,7 +120,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void testUpdateInvalid() throws Exception {
         Restaurant updated = new Restaurant(REST1_ID, "");
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID)
+        mockMvc.perform(put(REST_URL + REST1_ID)
                 .with(TestUtil.userHttpBasic(MANAGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))
@@ -148,7 +147,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
     @Transactional
     void testUpdateDuplicate() throws Exception {
         Restaurant updated = new Restaurant(REST1_ID, "KFC");
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID)
+        mockMvc.perform(put(REST_URL + REST1_ID)
                 .with(TestUtil.userHttpBasic(MANAGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updated)))
