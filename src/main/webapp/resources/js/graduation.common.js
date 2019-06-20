@@ -125,21 +125,17 @@ function renderChangeRolesBtn(data, type, row) {
     }
 }
 
-function renderVoteBtn(data, type, row) {
-    if (type === "display") {
-        return "<button class='btn btn-primary' onclick='vote(" + row.id + ")'/>";
-    }
-}
-
-
-function vote(id) {
+function vote(chkbox, id, url) {
+    const enabled = chkbox.is(":checked");
     $.ajax({
-        url: context.ajaxUrl + id + "/votes",
+        url: url + id + "/votes",
         type: "POST"
     }).done(function (data) {
         context.updateTable();
         successNoty("common.voting", data);
-    })
+    }).fail(function () {
+        $(chkbox).prop("checked", !enabled);
+    });
 }
 
 function changeRoles(id) {
@@ -149,7 +145,7 @@ function changeRoles(id) {
     }).done(function () {
         context.updateTable();
         successNoty("common.saved", "");
-    })
+    });
 }
 
 function enable(chkbox, id, url) {
@@ -172,5 +168,6 @@ function getSelectedRestaurant() {
         type: "POST"
     }).done(function (data) {
         selectedRestaurantId = data;
+        $.get(restaurantsAjaxUrl, updateTableByData);
     });
 }

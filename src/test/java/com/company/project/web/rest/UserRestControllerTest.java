@@ -46,7 +46,7 @@ class UserRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @EnabledIf(value = "new Date().getHours()<18")
+    @EnabledIf(value = "new Date(new Date().toLocaleString(\"en-Us\", {timeZone: \"Europe/Moscow\"})).getHours() < 18")
     void testVote() throws Exception {
         assertThat(1).isEqualTo(service.getCurrentRate(REST1_ID));
 
@@ -61,7 +61,7 @@ class UserRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @EnabledIf(value = "new Date().getHours()>=18")
+    @EnabledIf(value = "new Date(new Date().toLocaleString(\"en-Us\", {timeZone: \"Europe/Moscow\"})).getHours() >= 18")
     void testVoteTooLate() throws Exception {
         mockMvc.perform(post(REST_URL + "/" + REST1_ID + "/votes")
                 .with(userHttpBasic(USER))

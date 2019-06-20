@@ -3,7 +3,6 @@ const restaurantsAjaxUrl = "ajax/restaurants/";
 let selectedRestaurantId = 0;
 
 $(function () {
-    getSelectedRestaurant();
     makeEditable({
             ajaxUrl: restaurantsAjaxUrl,
             datatableOpts: {
@@ -40,7 +39,12 @@ $(function () {
                     {
                         "orderable": false,
                         "defaultContent": "",
-                        "render": renderVoteBtn
+                        "render": function (data, type, row) {
+                            if (type === "display") {
+                                return "<input type='checkbox' " + (row.id === selectedRestaurantId ? "checked" : "") + " onclick='vote($(this)," + row.id + ", restaurantsAjaxUrl);'/>";
+                            }
+                            return data;
+                        }
                     }
                 ],
                 "order": [
@@ -48,22 +52,12 @@ $(function () {
                         0,
                         "asc"
                     ]
-                ],
-                "rowCallback": function (row, data, displayNum, displayIndex, dataIndex) {
-                    if (data.id === selectedRestaurantId) {
-                        $(row).css("background-color", "lightgreen");
-                    }
-                },
-                "createdRow": function (row, data, dataIndex) {
-                    if (data.id === selectedRestaurantId) {
-                        $(row).css("background-color", "lightgreen");
-                    }
-                }
+                ]
             },
             updateTable: function () {
                 getSelectedRestaurant();
-                $.get(restaurantsAjaxUrl, updateTableByData);
             }
         }
     );
+    getSelectedRestaurant();
 });
