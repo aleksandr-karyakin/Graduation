@@ -31,7 +31,7 @@ public abstract class AbstractUsersController {
     }
 
     protected void checkModificationAllowed(int id) {
-        if (modificationRestriction && id < AbstractBaseEntity.START_SEQ + 2) {
+        if (modificationRestriction && id < AbstractBaseEntity.START_SEQ + 3) {
             throw new ModificationRestrictionException();
         }
     }

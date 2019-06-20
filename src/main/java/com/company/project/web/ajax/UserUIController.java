@@ -10,7 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,8 @@ public class UserUIController {
     private final RestaurantService restaurantService;
     private final VoteService voteService;
 
-    private static final LocalTime VOTING_END_TIME = LocalTime.of(18, 0);
+    private static final int VOTING_END_HOUR = 18;
+    private static final String LOCATION_OF_RESTAURANTS = "Europe/Moscow";
 
     @Autowired
     public UserUIController(RestaurantService restaurantService, VoteService voteService) {
@@ -35,7 +37,7 @@ public class UserUIController {
 
     @PostMapping(value = "/{restaurantId}/votes")
     public int vote(@PathVariable int restaurantId, @AuthenticationPrincipal AuthorizedUser authUser) {
-        if (LocalTime.now().isAfter(VOTING_END_TIME)) {
+        if (ZonedDateTime.now(ZoneId.of(LOCATION_OF_RESTAURANTS)).getHour() >= VOTING_END_HOUR) {
             throw new TooLateVoteException();
         }
         voteService.vote(authUser.getId(), restaurantId);
