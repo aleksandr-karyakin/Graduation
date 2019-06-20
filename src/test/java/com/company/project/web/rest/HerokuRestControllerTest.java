@@ -3,9 +3,15 @@ package com.company.project.web.rest;
 import com.company.project.util.exception.ErrorType;
 import com.company.project.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.io.IOException;
 
 import static com.company.project.TestUtil.userHttpBasic;
 import static com.company.project.data.UserTestData.*;
@@ -17,6 +23,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class HerokuRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminRestController.REST_URL + '/';
+
+    static {
+        Resource resource = new ClassPathResource("db/postgres/postgres.properties");
+        try {
+            PropertySource propertySource = new ResourcePropertySource(resource);
+            String herokuDbUrl = String.format("postgres://%s:%s@%s",
+                    propertySource.getProperty("database.username"),
+                    propertySource.getProperty("database.password"),
+                    ((String) propertySource.getProperty("database.url")).substring(18));
+            System.setProperty("DATABASE_URL", herokuDbUrl);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
     @Test
     void testDelete() throws Exception {
