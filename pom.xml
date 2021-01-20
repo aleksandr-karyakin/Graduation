@@ -46,7 +46,7 @@
         <json-path.version>2.4.0</json-path.version>
 
         <!-- JSON -->
-        <jackson-json.version>2.9.8</jackson-json.version>
+        <jackson-json.version>2.12.1</jackson-json.version>
 
         <!-- Cache -->
         <ehcache.version>3.7.0</ehcache.version>
