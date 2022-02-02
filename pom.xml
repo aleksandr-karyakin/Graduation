@@ -28,7 +28,7 @@
 
         <!-- DataBase -->
         <hsqldb.version>2.3.4</hsqldb.version>
-        <postgresql.version>42.2.5</postgresql.version>
+        <postgresql.version>42.2.25</postgresql.version>
 
         <!-- Persistence -->
         <hibernate.version>5.4.1.Final</hibernate.version>
